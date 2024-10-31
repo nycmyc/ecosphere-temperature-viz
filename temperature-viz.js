@@ -1,4 +1,4 @@
-// Sample data structure
+// Complete data set
 const data = [
     {
         date: "10/24/24",
@@ -9,8 +9,66 @@ const data = [
         "BM2 Test 2": 151.2,
         "BM2 Control": 155.6
     },
-    // Add the rest of your data points here
+    {
+        date: "10/25/24",
+        "Com100 Test 1": 97.0,
+        "Com100 Test 2": 97.2,
+        "Com100 Control": 92.4,
+        "BM2 Test 1": 147.6,
+        "BM2 Test 2": 153.6,
+        "BM2 Control": 150.8
+    },
+    {
+        date: "10/26/24",
+        "Com100 Test 1": 96.2,
+        "Com100 Test 2": 98.0,
+        "Com100 Control": 93.6,
+        "BM2 Test 1": 150.4,
+        "BM2 Test 2": 153.4,
+        "BM2 Control": 152.4
+    },
+    {
+        date: "10/27/24",
+        "Com100 Test 1": 96.0,
+        "Com100 Test 2": 101.6,
+        "Com100 Control": 97.2,
+        "BM2 Test 1": 148.4,
+        "BM2 Test 2": 154.8,
+        "BM2 Control": 150.4
+    },
+    {
+        date: "10/28/24",
+        "Com100 Test 1": 96.4,
+        "Com100 Test 2": 96.4,
+        "Com100 Control": 93.6,
+        "BM2 Test 1": 149.4,
+        "BM2 Test 2": 154.2,
+        "BM2 Control": 147.6
+    },
+    {
+        date: "10/29/24",
+        "Com100 Test 1": 98.6,
+        "Com100 Test 2": 97.6,
+        "Com100 Control": 94.0,
+        "BM2 Test 1": 149.2,
+        "BM2 Test 2": 155.2,
+        "BM2 Control": 139.8
+    },
+    {
+        date: "10/30/24",
+        "Com100 Test 1": 98.0,
+        "Com100 Test 2": 98.0,
+        "Com100 Control": 99.2,
+        "BM2 Test 1": 148.8,
+        "BM2 Test 2": 154.0,
+        "BM2 Control": 0  // Missing data point
+    }
 ];
+
+// Make sure Recharts is available
+if (typeof Recharts === 'undefined') {
+    console.error('Recharts library not loaded!');
+}
 
 const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = Recharts;
 
@@ -23,6 +81,12 @@ function TemperatureChart() {
         bm2Test2: '#e76f51',
         bm2Control: '#f28a68'
     };
+
+    // Add error boundary
+    if (!LineChart || !Line || !XAxis || !YAxis) {
+        console.error('Required Recharts components not available');
+        return React.createElement('div', null, 'Error loading visualization components');
+    }
 
     return React.createElement(
         'div',
@@ -111,6 +175,11 @@ function TemperatureChart() {
     );
 }
 
-// Render the app
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(TemperatureChart));
+// Add error handling for root element
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+    console.error('Root element not found!');
+} else {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(React.createElement(TemperatureChart));
+}
